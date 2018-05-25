@@ -1,5 +1,7 @@
 # Mongo backup container
-This will make a mongodump backup of the database in the linked container. Then push it in a zipped tar file (e.g. "backup-2018-05-25-10-10-02.tar.gz") to S3.
+This container will make a mongodump backup of the given MongoDB host (default: mongo:27017). Then it'll push the backup to S3 in a zipped tar file (e.g. "backup-2018-05-25-10-10-02.tar.gz"). 
+
+Inspired by [schickling/postgres-backup-s3](https://hub.docker.com/r/schickling/postgres-backup-s3/).
 
 # Usage
 Run the docker container:
@@ -11,7 +13,7 @@ Run the docker container:
         --env AWS_S3_BUCKET= \
         mongo-backup-container
 
-Or if the region is not eu-central-1:
+The variables AWS_REGION, MONGO_HOST and SCHEDULE are optional:
 
     docker run \
         --link mongo \
@@ -19,4 +21,16 @@ Or if the region is not eu-central-1:
         --env AWS_SECRET_ACCESS_KEY= \
         --env AWS_S3_BUCKET= \
         --env AWS_REGION=eu-west-1 \
+        --env MONGO_HOST: mongo:27017 \
+        --env SCHEDULE: '@every 20s' \
         mongo-backup-container
+
+## Docker compose
+Docker compose will start a mongo container exposing port 27017 and a backup container that will run the backup script every 20 seconds.
+
+### Automatic Periodic Backups
+
+You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="@daily"` to run the backup automatically.
+
+More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
+

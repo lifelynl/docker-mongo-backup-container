@@ -23,7 +23,7 @@ mkdir /root/backup_temp/
 mkdir /root/backup_temp/original
 
 # Make the mongodump backup
-mongodump --out /root/backup_temp/original --host mongo:27017
+mongodump --out /root/backup_temp/original --host $MONGO_HOST
 
 # Archive + zip and remove the original backup files
 tar -czvf /root/backup_temp/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz /root/backup_temp/original
