@@ -1,6 +1,10 @@
 version: 2
 jobs:
   publish-to-docker:
+    branches:
+      only:
+        - develop
+        
     docker:
       - image: docker:git
 
