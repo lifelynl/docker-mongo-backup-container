@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  publish-to-docker:
+  build:
     branches:
       only:
         - develop
