@@ -22,6 +22,7 @@ RUN apt-get update \
         apt-transport-https \
         ca-certificates \
         curl \
+        cron \
         python3-pip \
         python3-setuptools \
         python3-dev \
