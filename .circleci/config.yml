@@ -15,6 +15,6 @@ jobs:
       - setup_remote_docker
 
       - run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push lifely/mongo-backup-container:$CIRCLE_SHA1
