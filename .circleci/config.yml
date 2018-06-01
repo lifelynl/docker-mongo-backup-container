@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  publish-to-docker:
+    docker:
+      - image: docker:git
+
+    working_directory: ~/container
+
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
+          docker push lifely/mongo-backup-container:$CIRCLE_SHA1
