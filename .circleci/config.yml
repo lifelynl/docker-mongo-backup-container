@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-and-push-to-docker:
     branches:
       only:
         - develop
@@ -18,3 +18,10 @@ jobs:
           docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push lifely/mongo-backup-container:$CIRCLE_SHA1
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-and-push-to-docker:
+          context: docker-hub-auth
