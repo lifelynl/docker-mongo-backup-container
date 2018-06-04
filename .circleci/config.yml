@@ -1,10 +1,6 @@
 version: 2
 jobs:
-  build-and-push-to-docker:
-    branches:
-      only:
-        - develop
-        
+  build-and-push-to-docker:        
     docker:
       - image: docker:git
 
@@ -25,3 +21,6 @@ workflows:
     jobs:
       - build-and-push-to-docker:
           context: docker-hub-auth
+          filters:
+            branches:
+              only: develop
