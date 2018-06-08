@@ -1,16 +1,15 @@
-#! /bin/sh
+#! /bin/bash
 
 set -e
 
 if [ "${SCHEDULE}" = "**None**" ]; then
-  sh backup.sh
+  bash backup.sh
 else
-  echo "run.sh started"
-  # Format: minute hour day-of-month month day-of-week command
-  # echo "$SCHEDULE root /bin/sh /backup.sh 2>&1" > /etc/crontab
-  echo "$SCHEDULE root echo \"hallo\" > /tmp/testyo" > /etc/crontab
+  echo "SHELL=/bin/bash" >> /etc/crontab
+  echo "$SCHEDULE root /usr/bin/env bash /backup.sh &>> /var/log/cron.log" >> /etc/crontab
   echo "#" >> /etc/crontab
-  # chmod 0644 /var/spool/cron/crontabs/root
   touch /var/log/cron.log
-  cron -f
+  env > /root/.docker_env # dump env to file so we're able to get vars back when running a script from cron
+  sed -i "/SCHEDULE/c\SCHEDULE='$SCHEDULE'" /root/.docker_env # we need quotes around the asterisks
+  /usr/bin/env cron -f
 fi
