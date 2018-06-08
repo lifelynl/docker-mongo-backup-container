@@ -1,10 +1,19 @@
 version: 2
 jobs:
-  build:
-    branches:
-      only:
-        - develop
-        
+  build-container:        
+    docker:
+      - image: docker:git
+
+    working_directory: ~/container
+
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run: |
+          docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
+          
+  push-to-docker:        
     docker:
       - image: docker:git
 
@@ -18,3 +27,28 @@ jobs:
           docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push lifely/mongo-backup-container:$CIRCLE_SHA1
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-container:
+          filters:
+            branches:
+              ignore: master
+      - push-to-docker:
+          context: docker-hub-auth
+          filters:
+            branches:
+              only: master
+  nightly:
+     triggers:
+       - schedule:
+           cron: "0 0 * * *"
+           filters:
+             branches:
+               only:
+                 - master
+                 - develop
+     jobs:
+       - build-container
