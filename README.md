@@ -10,9 +10,9 @@ Run the docker container:
         --env AWS_ACCESS_KEY_ID= \
         --env AWS_SECRET_ACCESS_KEY= \
         --env AWS_S3_BUCKET= \
-        lifely/docker-mongo-backup-container
+        lifely/mongo-backup-container
 
-The variables AWS_S3_PREFIX, AWS_REGION, MONGO_HOST and SCHEDULE are optional:
+The variables AWS_S3_PREFIX, AWS_REGION, MONGO_HOST, SCHEDULE and AWS_SSE_KEY are optional:
 
     docker run \
         --env AWS_ACCESS_KEY_ID= \
@@ -22,11 +22,15 @@ The variables AWS_S3_PREFIX, AWS_REGION, MONGO_HOST and SCHEDULE are optional:
         --env AWS_REGION=eu-west-1 \
         --env MONGO_HOST: mongo:27017 \
         --env SCHEDULE: '0 * * * *' \
-        lifely/docker-mongo-backup-container
+        --env AWS_SSE_KEY= \
+        lifely/mongo-backup-container
 
 ## Docker compose
 Docker compose will start a mongo container exposing port 27017 and a backup container that will run the backup script every minute. Don't forget to set the AWS credentials.
 
 ### Automatic Periodic Backups
 You can set the `SCHEDULE` environment variable like `-e SCHEDULE="0 * * * *"` (hourly) to run the backup automatically. This uses regular cron syntax: minute hour day-of-month month day-of-week
+
+### AWS SSE
+The AWS_SSE_KEY should be a string of [exactly 32 characters](https://stackoverflow.com/a/35905265).
 
