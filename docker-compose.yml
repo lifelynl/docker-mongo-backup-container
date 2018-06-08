@@ -8,13 +8,15 @@ services:
       - "27017:27017"
 
   mongo-backup:
-    image: dirkkok/mongo-backup-container
+    image: lifely/mongo-backup-container
     container_name: mongo-backup
+    depends_on:
+      - mongo
   
     environment:
-      AWS_ACCESS_KEY_ID: AKIAI3SDJ4NOFDEO5WNA
-      AWS_SECRET_ACCESS_KEY: 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
-      AWS_S3_BUCKET: lifely-devops-test
+      AWS_ACCESS_KEY_ID: ID
+      AWS_SECRET_ACCESS_KEY: KEY
+      AWS_S3_BUCKET: BUCKET
       AWS_REGION: eu-central-1
       MONGO_HOST: mongo:27017
-      SCHEDULE: '@every 20s'
+      SCHEDULE: '* * * * *'
