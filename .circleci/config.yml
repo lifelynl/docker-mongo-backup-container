@@ -32,13 +32,11 @@ workflows:
   version: 2
   build:
     jobs:
-      - build-container
+      - build-container:
           filters:
             ignore: master
       - push-to-docker:
           context: docker-hub-auth
-          requires:
-            - build-container
           filters:
             branches:
               only: master
