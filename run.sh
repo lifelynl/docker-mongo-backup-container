@@ -1,9 +1,14 @@
-#! /bin/sh
+#! /bin/bash
 
 set -e
 
 if [ "${SCHEDULE}" = "**None**" ]; then
-  sh backup.sh
+  bash backup.sh
 else
-  exec go-cron "$SCHEDULE" /bin/sh backup.sh
+  echo "SHELL=/bin/bash" >> /etc/crontab
+  echo "$SCHEDULE root /usr/bin/env bash /backup.sh &>> /var/log/cron.log" >> /etc/crontab
+  echo "#" >> /etc/crontab
+  touch /var/log/cron.log
+  env > /etc/environment # dump env to file so we're able to get vars back when running a script from cron
+  cron -f
 fi

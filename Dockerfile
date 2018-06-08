@@ -19,15 +19,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
         apt-transport-https \
         ca-certificates \
         curl \
+        cron \
         python3-pip \
         python3-setuptools \
         python3-dev \
         python3-wheel \
     && pip3 install --upgrade pip \
     && pip install awscli \
-\
-    && curl -L https://github.com/odise/go-cron/releases/download/v0.0.6/go-cron-linux.gz | zcat > /usr/local/bin/go-cron \
-    && chmod u+x /usr/local/bin/go-cron \
 \
     && apt-get remove -y --purge --auto-remove \
         apt-transport-https \
@@ -43,4 +41,4 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
 ADD run.sh run.sh
 ADD backup.sh backup.sh
 
-CMD ["sh", "run.sh"]
+CMD ["bash", "run.sh"]
