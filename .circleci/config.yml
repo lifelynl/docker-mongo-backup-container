@@ -34,9 +34,21 @@ workflows:
     jobs:
       - build-container:
           filters:
-            ignore: master
+            branches:
+              ignore: master
       - push-to-docker:
           context: docker-hub-auth
           filters:
             branches:
               only: master
+  nightly:
+     triggers:
+       - schedule:
+           cron: "0 0 * * *"
+           filters:
+             branches:
+               only:
+                 - master
+                 - develop
+     jobs:
+       - build-container
