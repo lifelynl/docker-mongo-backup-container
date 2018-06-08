@@ -7,30 +7,26 @@ Inspired by [schickling/postgres-backup-s3](https://hub.docker.com/r/schickling/
 Run the docker container:
 
     docker run \
-        --link mongo \
         --env AWS_ACCESS_KEY_ID= \
         --env AWS_SECRET_ACCESS_KEY= \
         --env AWS_S3_BUCKET= \
-        mongo-backup-container
+        lifely/docker-mongo-backup-container
 
-The variables AWS_REGION, MONGO_HOST and SCHEDULE are optional:
+The variables AWS_S3_PREFIX, AWS_REGION, MONGO_HOST and SCHEDULE are optional:
 
     docker run \
-        --link mongo \
         --env AWS_ACCESS_KEY_ID= \
         --env AWS_SECRET_ACCESS_KEY= \
         --env AWS_S3_BUCKET= \
+        --env AWS_S3_PREFIX= \
         --env AWS_REGION=eu-west-1 \
         --env MONGO_HOST: mongo:27017 \
-        --env SCHEDULE: '@every 20s' \
-        mongo-backup-container
+        --env SCHEDULE: '0 * * * *' \
+        lifely/docker-mongo-backup-container
 
 ## Docker compose
-Docker compose will start a mongo container exposing port 27017 and a backup container that will run the backup script every 20 seconds.
+Docker compose will start a mongo container exposing port 27017 and a backup container that will run the backup script every minute. Don't forget to set the AWS credentials.
 
 ### Automatic Periodic Backups
-
-You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="@daily"` to run the backup automatically.
-
-More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
+You can set the `SCHEDULE` environment variable like `-e SCHEDULE="0 * * * *"` (hourly) to run the backup automatically. This uses regular cron syntax: minute hour day-of-month month day-of-week
 

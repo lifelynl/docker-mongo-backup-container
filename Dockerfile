@@ -5,6 +5,7 @@ ENV AWS_ACCESS_KEY_ID **None**
 ENV AWS_SECRET_ACCESS_KEY **None**
 ENV AWS_SSE_KEY **None**
 ENV AWS_S3_BUCKET **None**
+ENV AWS_S3_PREFIX backup
 ENV AWS_REGION eu-central-1
 ENV SCHEDULE **None**
 ENV MONGO_HOST mongo:27017
@@ -19,15 +20,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
         apt-transport-https \
         ca-certificates \
         curl \
+        cron \
         python3-pip \
         python3-setuptools \
         python3-dev \
         python3-wheel \
     && pip3 install --upgrade pip \
     && pip install awscli \
-\
-    && curl -L https://github.com/odise/go-cron/releases/download/v0.0.6/go-cron-linux.gz | zcat > /usr/local/bin/go-cron \
-    && chmod u+x /usr/local/bin/go-cron \
 \
     && apt-get remove -y --purge --auto-remove \
         apt-transport-https \
@@ -43,4 +42,4 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
 ADD run.sh run.sh
 ADD backup.sh backup.sh
 
-CMD ["sh", "run.sh"]
+CMD ["bash", "run.sh"]
