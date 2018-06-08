@@ -31,9 +31,9 @@ rm -rf /root/backup_temp/original
 
 # Copy the backup to S3
 if [ "${AWS_SSE_KEY}" = "**None**" ]; then
-  /usr/local/bin/aws s3 cp /root/backup_temp/backup.tar.gz s3://$AWS_S3_BUCKET/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz
+  /usr/local/bin/aws s3 cp /root/backup_temp/backup.tar.gz s3://$AWS_S3_BUCKET/$AWS_S3_PREFIX/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz
 else
-  /usr/local/bin/aws s3 cp --sse-c --sse-c-key="$AWS_SSE_KEY" /root/backup_temp/backup.tar.gz s3://$AWS_S3_BUCKET/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz
+  /usr/local/bin/aws s3 cp --sse-c --sse-c-key="$AWS_SSE_KEY" /root/backup_temp/backup.tar.gz s3://$AWS_S3_BUCKET/$AWS_S3_PREFIX/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz
 fi
 
 # Remove the created backup directory

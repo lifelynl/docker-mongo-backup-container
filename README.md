@@ -20,6 +20,7 @@ The variables AWS_REGION, MONGO_HOST and SCHEDULE are optional:
         --env AWS_ACCESS_KEY_ID= \
         --env AWS_SECRET_ACCESS_KEY= \
         --env AWS_S3_BUCKET= \
+        --env AWS_S3_PREFIX= \
         --env AWS_REGION=eu-west-1 \
         --env MONGO_HOST: mongo:27017 \
         --env SCHEDULE: '0 * * * *' \
