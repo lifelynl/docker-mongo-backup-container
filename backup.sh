@@ -26,11 +26,15 @@ mkdir /root/backup_temp/original
 mongodump --out /root/backup_temp/original --host $MONGO_HOST
 
 # Archive + zip and remove the original backup files
-tar -czvf /root/backup_temp/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz /root/backup_temp/original
+tar -czvf /root/backup_temp/backup.tar.gz /root/backup_temp/original
 rm -rf /root/backup_temp/original
 
-# Sync the backup to S3
-s3 sync /root/backup_temp/* s3://$AWS_S3_BUCKET
+# Copy the backup to S3
+if [ "${AWS_SSE_KEY}" = "**None**" ]; then
+  /usr/local/bin/aws s3 cp /root/backup_temp/backup.tar.gz s3://$AWS_S3_BUCKET/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz
+else
+  /usr/local/bin/aws s3 cp --sse-c --sse-c-key="$AWS_SSE_KEY" /root/backup_temp/backup.tar.gz s3://$AWS_S3_BUCKET/backup-$(date -d "today" +"%Y-%m-%d-%H-%M-%S").tar.gz
+fi
 
 # Remove the created backup directory
 rm -rf /root/backup_temp
