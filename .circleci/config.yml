@@ -1,5 +1,4 @@
 version: 2
-REPO=lifely/mongo-backup-container
 jobs:
   build-container:        
     docker:
@@ -12,7 +11,7 @@ jobs:
       - setup_remote_docker
 
       - run: |
-          docker build -t $REPO:$CIRCLE_SHA1 .
+          docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
           
   push-to-docker:        
     docker:
@@ -25,9 +24,9 @@ jobs:
       - setup_remote_docker
 
       - run: |
-          docker build -t $REPO:$CIRCLE_SHA1 .
+          docker build -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push $REPO:$CIRCLE_SHA1
+          docker push lifely/mongo-backup-container:$CIRCLE_SHA1
 
 workflows:
   version: 2
