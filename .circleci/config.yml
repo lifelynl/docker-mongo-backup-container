@@ -27,6 +27,7 @@ jobs:
           docker build -t lifely/mongo-backup-container:latest -t lifely/mongo-backup-container:$CIRCLE_SHA1 .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push lifely/mongo-backup-container:$CIRCLE_SHA1
+          docker push lifely/mongo-backup-container:latest
 
 workflows:
   version: 2
