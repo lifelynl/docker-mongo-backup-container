@@ -1,5 +1,5 @@
 # Mongo backup container
-This container will make a mongodump backup of the given MongoDB host (default: mongo:27017). It'll then push the backup to S3 in a zipped tar file (e.g. "backup-2018-05-25-10-10-02.tar.gz").
+This container will make a mongodump (--archive --gzip) backup of the given MongoDB host (default: mongo:27017). It'll then push the backup to S3.
 
 Currently using MongoDB 3.4.
 
