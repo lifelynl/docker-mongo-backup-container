@@ -1,5 +1,5 @@
 # Mongo backup container
-This container will make a mongodump backup of the given MongoDB host (default: mongo:27017). Then it'll push the backup to S3 in a zipped tar file (e.g. "backup-2018-05-25-10-10-02.tar.gz"). 
+This container will make a mongodump backup of the given MongoDB host (default: mongo:27017). It'll then push the backup to S3 in a zipped tar file (e.g. "backup-2018-05-25-10-10-02.tar.gz").
 
 Inspired by [schickling/postgres-backup-s3](https://hub.docker.com/r/schickling/postgres-backup-s3/).
 
@@ -20,8 +20,8 @@ The variables AWS_S3_PREFIX, AWS_REGION, MONGO_HOST, SCHEDULE and AWS_SSE_KEY ar
         --env AWS_S3_BUCKET= \
         --env AWS_S3_PREFIX= \
         --env AWS_REGION=eu-west-1 \
-        --env MONGO_HOST: mongo:27017 \
-        --env SCHEDULE: '0 * * * *' \
+        --env MONGO_HOST=mongo:27017 \
+        --env SCHEDULE="0 * * * *" \
         --env AWS_SSE_KEY= \
         lifely/mongo-backup-container
 
@@ -33,4 +33,3 @@ You can set the `SCHEDULE` environment variable like `-e SCHEDULE="0 * * * *"` (
 
 ### AWS SSE
 The AWS_SSE_KEY should be a string of [exactly 32 characters](https://stackoverflow.com/a/35905265).
-

@@ -9,7 +9,7 @@ ENV AWS_S3_PREFIX backup
 ENV AWS_REGION eu-central-1
 ENV SCHEDULE **None**
 ENV MONGO_HOST mongo:27017
-    
+
 # Install everything and remove the bits we don't need anymore
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 \
     && echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.4.list \
@@ -38,7 +38,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
     && apt-get clean \
     && rm -r /var/lib/apt/lists/*
 
-# Add
+# Add scripts
 ADD run.sh run.sh
 ADD backup.sh backup.sh
 

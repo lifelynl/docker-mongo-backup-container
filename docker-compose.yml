@@ -12,11 +12,13 @@ services:
     container_name: mongo-backup
     depends_on:
       - mongo
-  
+
     environment:
-      AWS_ACCESS_KEY_ID: ID
-      AWS_SECRET_ACCESS_KEY: KEY
-      AWS_S3_BUCKET: BUCKET
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_S3_BUCKET:
+      AWS_S3_PREFIX:
       AWS_REGION: eu-central-1
       MONGO_HOST: mongo:27017
-      SCHEDULE: '* * * * *'
+      AWS_SSE_KEY:
+      SCHEDULE: "* * * * *"
