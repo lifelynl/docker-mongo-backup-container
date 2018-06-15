@@ -1,6 +1,8 @@
 # Mongo backup container
 This container will make a mongodump backup of the given MongoDB host (default: mongo:27017). It'll then push the backup to S3 in a zipped tar file (e.g. "backup-2018-05-25-10-10-02.tar.gz").
 
+Currently using MongoDB 3.4.
+
 Inspired by [schickling/postgres-backup-s3](https://hub.docker.com/r/schickling/postgres-backup-s3/).
 
 # Usage
