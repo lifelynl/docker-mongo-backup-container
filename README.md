@@ -3,7 +3,7 @@ This container will make a mongodump (--archive --gzip) backup of the given Mong
 
 Currently using MongoDB 3.4.
 
-Inspired by [schickling/postgres-backup-s3](https://hub.docker.com/r/schickling/postgres-backup-s3/).
+Somewhat inspired by [schickling/postgres-backup-s3](https://hub.docker.com/r/schickling/postgres-backup-s3/).
 
 # Usage
 Run the docker container:
