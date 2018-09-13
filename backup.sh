@@ -24,7 +24,8 @@ if [ "${AWS_S3_BACKUP_NAME}" != "**None**" ]; then
 fi
 
 # Create required directory
-mkdir /root/backup_temp/
+mkdir -p /root/backup_temp/
+rm -f /root/backup_temp/backup.archive.gz
 
 # Make the mongodump backup
 mongodump --archive="/root/backup_temp/backup.archive.gz" --host $MONGO_HOST --gzip
