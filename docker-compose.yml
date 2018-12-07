@@ -18,7 +18,10 @@ services:
       AWS_SECRET_ACCESS_KEY:
       AWS_S3_BUCKET:
       AWS_S3_PREFIX:
+      AWS_S3_BACKUP_NAME:
       AWS_REGION: eu-central-1
       MONGO_HOST: mongo:27017
       AWS_SSE_KEY:
+      AWS_S3_ENABLE_VERSIONING: "true"
+      AWS_S3_LIFECYLCE_CONFIGURATION: '{ "Rules": [ { "Filter": { "Prefix": "hourly/" }, "Status": "Enabled", "NoncurrentVersionExpiration": { "NoncurrentDays": 7 }, "ID": "Remove hourly backups after 7 days" }, { "Filter": { "Prefix": "daily/" }, "Status": "Enabled", "NoncurrentVersionExpiration": { "NoncurrentDays": 60 }, "ID": "Remove daily backups after 60 days" }, { "Filter": { "Prefix": "monthly/" }, "Status": "Enabled", "NoncurrentVersionExpiration": { "NoncurrentDays": 365 }, "ID": "Remove monthly backups after 365 days" } ] }'
       SCHEDULE: "* * * * *"

@@ -22,6 +22,8 @@ The variables AWS_S3_PREFIX, AWS_S3_BACKUP_NAME, AWS_REGION, MONGO_HOST, SCHEDUL
         --env AWS_S3_BUCKET= \
         --env AWS_S3_PREFIX= \
         --env AWS_S3_BACKUP_NAME= \
+        --env AWS_S3_ENABLE_VERSIONING= \
+        --env AWS_S3_LIFECYLCE_CONFIGURATION= \
         --env AWS_REGION=eu-west-1 \
         --env MONGO_HOST=mongo:27017 \
         --env SCHEDULE="0 * * * *" \
@@ -38,3 +40,6 @@ You can set the `SCHEDULE` environment variable like `-e SCHEDULE="0 * * * *"` (
 
 ### AWS SSE
 The AWS_SSE_KEY should be a string of [exactly 32 characters](https://stackoverflow.com/a/35905265).
+
+### AWS Versioning
+To set the versioning state, you must be the [bucket owner](https://docs.aws.amazon.com/cli/latest/reference/s3api/put-bucket-versioning.html).
