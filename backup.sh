@@ -23,6 +23,14 @@ if [ "${AWS_S3_BACKUP_NAME}" != "**None**" ]; then
   BACKUP_NAME="${AWS_S3_BACKUP_NAME}"
 fi
 
+if [ "${AWS_S3_ENABLE_VERSIONING}" != "**None**" ]; then
+  /usr/local/bin/aws s3api put-bucket-versioning --bucket "${AWS_S3_BUCKET}" --versioning-configuration '{"Status":"Enabled"}'
+fi
+
+if [ "${AWS_S3_LIFECYLCE_CONFIGURATION}" != "**None**" ]; then
+  /usr/local/bin/aws s3api put-bucket-lifecycle-configuration --bucket "${AWS_S3_BUCKET}" --lifecycle-configuration "${AWS_S3_LIFECYLCE_CONFIGURATION}"
+fi
+
 # Create required directory
 mkdir -p /root/backup_temp/
 rm -f /root/backup_temp/backup.archive.gz
